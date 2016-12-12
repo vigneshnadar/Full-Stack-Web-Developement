@@ -7,7 +7,9 @@ server.set('viewengine','ejs');
 
 server.get('/',(req,res) => {
 //res.send('Hello World Bask Kya');
-res.render('index.ejs');
+res.render('index.js',{
+	content: 'Sending data from the server'
+});
 });
 
 

@@ -1,8 +1,7 @@
-<html>
-<head>EJS Page</head>
-<body>
+<%- include('header') -%>
 You are currently reading the EJS Page.We are regular html files but javascript can be embedded
 I am awesome!!
-<%= Math.random()%>
-</body>
-</html>
+<div id="root">
+<%= content %>
+</div>
+<%- include('footer') -%>
