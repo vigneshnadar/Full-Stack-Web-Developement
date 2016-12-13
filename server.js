@@ -3,12 +3,14 @@ import config from './config';
 import express from 'express';
 const server=express();
 
+console.log('expressdc');
+
 server.set('viewengine','ejs');
 
 server.get('/',(req,res) => {
 //res.send('Hello World Bask Kya');
-res.render('index',{
-	content: 'Sending data from the server'
+res.render('index.ejs', {
+	content: '...'
 });
 });
 
