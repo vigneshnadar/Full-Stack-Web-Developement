@@ -1,9 +1,14 @@
 import config from './config';
 
 import express from 'express';
+import sassMiddleware from 'node-sass-middleware';
+import path from 'path';
 const server=express();
 
-console.log('expressdc');
+server.use(sassMiddleware({
+	src: path.join(__dirname, 'sass'),
+	destination: path.join(__dirname, 'public')
+}));
 
 server.set('viewengine','ejs');
 
