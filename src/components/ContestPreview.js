@@ -4,10 +4,10 @@ import React from 'react';
 
 const ContestPreview = (contest) => (
 	<div className="ContestPreview">
-	<div>
+	<div className="category-name">
 	{contest.categoryName}
-	</div>
-	<div>
+	</div >
+	<div className="contest-name">
 	{contest.contestName}
 	</div>
 </div>
