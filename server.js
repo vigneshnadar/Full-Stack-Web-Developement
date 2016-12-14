@@ -14,6 +14,8 @@ server.use(sassMiddleware({
 
 server.set('view engine','ejs');
 
+import './serverRender';
+
 server.get('/',(req,res) => {
 //res.send('Hello World Bask Kya');
 res.render('index', {
@@ -28,6 +30,6 @@ server.use(express.static('public'));
 // res.send('The About Page');
 // });
 
-server.listen(config.port,() => {
+server.listen(config.port,config.host, () => {
 	console.log('express is listening on port: ',config.port);
 });
