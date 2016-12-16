@@ -15,12 +15,20 @@ server.use(sassMiddleware({
 server.set('view engine','ejs');
 
 import './serverRender';
+import serverRender from './serverRender';
 
 server.get('/',(req,res) => {
 //res.send('Hello World Bask Kya');
-res.render('index', {
-	content: '...'
+
+	serverRender()
+	.then(({ initialMarkup, initialData}) => {
+		res.render('index', {
+				initialMarkup,
+				initialData
 });
+	})
+	.catch(console.error);
+
 });
 
 server.use('/api',apiRouter);
