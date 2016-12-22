@@ -1,8 +1,10 @@
 import Header from './Header';
 import React from 'react';
-import axios from 'axios';
-import ContestPreview from './ContestPreview';
+import ContestList from './ContestList';
 
+
+const pushState = (obj,url) => 
+window.history.pushState(obj, '', url);
 
 
 //component as a constant. top level is usually app component
@@ -19,16 +21,20 @@ class App extends React.Component {
 		
 	}
 
+	fetchContest = (contestId) => {
+		pushState(
+			{ currentContestId: contestId },
+			`/contest/${contestId}`
+			);
+	};
+
 	render(){
 	return(
 		<div className="App">
 		<Header message={this.state.pageHeader}/>
-		<div>
-		{this.state.contests.map(contest =>
-			<ContestPreview key={contest.id} {...contest} />
-			)}
-		
-		</div>
+		<ContestList 
+		onContestClick={this.fetchContest}
+		contests={this.state.contests} />
 		</div>
 		);
 };
