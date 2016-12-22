@@ -2,6 +2,7 @@ import Header from './Header';
 import React from 'react';
 import ContestList from './ContestList';
 import Contest from './Contest';
+import * as api from '../api';
 
 
 const pushState = (obj,url) => 
@@ -28,11 +29,22 @@ class App extends React.Component {
 			`/contest/${contestId}`
 			);
 
-		//this.state.contests[contestId]
-		this.setState({
-			pageHeader: this.state.contests[contestId].contestName,
-			currentContestId: contestId
+		api.fetchContest(contestId).then(contest => {
+			this.setState({
+			pageHeader: contest.contestName,
+			currentContestId: contest.id,
+			contests: {
+				...this.state.cotests,
+				[contest.id]: contest
+			}
+
+
 		});
+
+		});
+
+		//this.state.contests[contestId]
+		
 	};
 
 
