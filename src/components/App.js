@@ -9,6 +9,11 @@ const pushState = (obj,url) =>
 window.history.pushState(obj, '', url);
 
 
+
+const onPopState = handler => {
+window.onpopstate = handler;
+};
+
 //component as a constant. top level is usually app component
 //components are resuable by passing different properties
 //only create classes when state or lifecycle of components is required
@@ -21,8 +26,16 @@ class App extends React.Component {
 	state=this.props.initialData;
 
 	componentDidMount(){
-
+		onPopState((event) => {
+			this.setState({
+				currentContestId: (event.state || {}).currentContestId
+			});
+		});
 		
+	}
+
+	componentWillUnmount(){
+		onPopState(null);
 	}
 
 	fetchContest = (contestId) => {
@@ -38,6 +51,27 @@ class App extends React.Component {
 				...this.state.contests,
 				[contest.id]: contest
 			}
+
+
+		});
+
+		});
+
+		//this.state.contests[contestId]
+		
+	};//end of fetch contest
+
+
+	fetchContestList = () => {
+		pushState(
+			{ currentContestId: null },
+			'/'
+			);
+
+		api.fetchContestList().then(contests => {
+			this.setState({
+			currentContestId: null,
+			contests
 
 
 		});
@@ -67,7 +101,8 @@ class App extends React.Component {
 
    currentContent() {
    	if (this.state.currentContestId) {
-   		return <Contest {... this.currentContest()} />;
+   		return <Contest contestListClick={this.fetchContestList}
+   		{... this.currentContest()} />;
    	}
 
     return	<ContestList 
