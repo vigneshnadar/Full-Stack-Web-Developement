@@ -17,10 +17,13 @@ server.set('view engine','ejs');
 import './serverRender';
 import serverRender from './serverRender';
 
-server.get('/',(req,res) => {
+
+server.get(['/', '/contest/:contestId'],(req,res) => {
 //res.send('Hello World Bask Kya');
 
-	serverRender()
+console.log(req.params.contestId);
+
+	serverRender(req.params.contestId)
 	.then(({ initialMarkup, initialData}) => {
 		res.render('index', {
 				initialMarkup,

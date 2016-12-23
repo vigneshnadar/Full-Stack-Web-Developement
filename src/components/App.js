@@ -13,10 +13,12 @@ window.history.pushState(obj, '', url);
 //components are resuable by passing different properties
 //only create classes when state or lifecycle of components is required
 class App extends React.Component {
-	state={
-		pageHeader: 'Naming Contests',
-		contests: this.props.initialContests
-	};
+
+	static propTypes = {
+		initialData: React.PropTypes.object.isRequired
+	}
+
+	state=this.props.initialData;
 
 	componentDidMount(){
 
@@ -31,10 +33,9 @@ class App extends React.Component {
 
 		api.fetchContest(contestId).then(contest => {
 			this.setState({
-			pageHeader: contest.contestName,
 			currentContestId: contest.id,
 			contests: {
-				...this.state.cotests,
+				...this.state.contests,
 				[contest.id]: contest
 			}
 
@@ -48,9 +49,25 @@ class App extends React.Component {
 	};
 
 
+	currentContest() {
+		if(this.state.currentContestId){
+			return this.state.contests[this.state.currentContestId];
+		}
+	}
+
+
+	pageHeader(){
+		if(this.state.currentContestId)
+		{
+			return this.currentContest().contestName;
+		}
+
+		return 'Naming Contests';
+	}
+
    currentContent() {
    	if (this.state.currentContestId) {
-   		return <Contest {...this.state.contests[this.state.currentContestId]} />;
+   		return <Contest {... this.currentContest()} />;
    	}
 
     return	<ContestList 
@@ -61,7 +78,7 @@ class App extends React.Component {
 	render(){
 	return(
 		<div className="App">
-		<Header message={this.state.pageHeader} />
+		<Header message={this.pageHeader()} />
 		{this.currentContent()}
 		</div>
 		);
