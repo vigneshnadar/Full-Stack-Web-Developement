@@ -8,6 +8,7 @@ export const fnxyz=function(msg){
 };
 
 export default {
+	mongodbUri: 'mongodb://127.0.0.1:27017',
 	port: env.PORT || 8080,
 	//host: env.HOST || '0.0.0.0',
 	host: env.HOST || 'localhost',
